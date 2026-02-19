@@ -18,9 +18,7 @@ conf.use_random_initial_phase = 1;  % random phases per ray
 conf.use_absolute_delays = 0;       % LOS path has 0 delay
 
 conf.possible_scenarios = ...   % Channel scenarios possible to appear 
-    {'3GPP_38.901_UMa_LOS','3GPP_38.901_UMa_NLOS', ...
-    'BERLIN_UMa_LOS', 'BERLIN_UMa_NLOS', ...
-    'DRESDEN_UMa_LOS', 'DRESDEN_UMa_NLOS'};    
+    {'3GPP_38.901_UMa_NLOS', 'BERLIN_UMa_NLOS', 'DRESDEN_UMa_NLOS'};    
 
 %% Base station config
 conf.BS = struct;
