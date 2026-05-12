@@ -4,6 +4,9 @@ rng(conf.seed);     % fix random seed
 scenario_idxs = randi(length(conf.possible_scenarios), 1, conf.n_segments); % select scenario idxs for segments
 conf.scenarios = conf.possible_scenarios(scenario_idxs);                    % scenarios per segment
 
+az_shift = (rand - 0.5)*2 * 80;
+el_shift = (rand - 0.5)*2 * 80;
+
 %% Simulation parameters config
 simpar = qd_simulation_parameters;
 simpar.center_frequency = conf.center_freq;                                 % set center frequency
@@ -17,9 +20,11 @@ BS = conf.BS;
 if BS.tilt == "auto"
    % Such tilt, that antenna norm is directed to the middle of track
    BS.tilt = rad2deg(pi/2 - atan2(conf.min_distance_m + conf.track_len_m/2 , conf.BS.height)); 
+   BS.tilt = BS.tilt + el_shift;
 end
 tx_ant = qd_arrayant('3gpp-mmw', BS.Ain, BS.Bin, BS.Cin, BS.Din, BS.Ein, BS.Fin, BS.N_ver, BS.N_hor, BS.Lin, BS.Jin); % bs antenna object
 tx_ant.rotate_pattern(BS.tilt, 'y');    % apply tilt
+tx_ant.rotate_pattern(az_shift, 'z')
 BS.Pos = [0; 0; BS.height];             % base station position
 
 %% User antenna
